@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class GaugeSystem : MonoBehaviour
 {
     public GameSystem gameSystem;                   // 게임 전체 flow 관리하는 오브젝트
-    bool isOver = false;
+    bool isOver = true;
 
-    // 라운드 별 난이도 관련 변수
-    [SerializeField] List<float> incrementPowers;   // 라운드 별 게이지 증가량
-    [SerializeField] List<float> decrementPowers;   // 라운드 별 게이지 감소량
+    [Header("라운드 별 난이도 관련 변수")]
+    [Header("라운드 별 게이지 증가량")]
+    [SerializeField] List<float> incrementPowers;
+    [Header("라운드 별 게이지 감소량")]
+    [SerializeField] List<float> decrementPowers;
     float incrementPower;
     float decrementPower;
     int round = 0;

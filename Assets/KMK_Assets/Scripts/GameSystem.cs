@@ -1,5 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameSystem : MonoBehaviour
 {
@@ -13,7 +15,9 @@ public class GameSystem : MonoBehaviour
 
     [SerializeField] float restartDelay = 3f;
     float restartTime = 0f;
-    bool prepareRestart = false;
+    bool prepareRestart = true;
+    [SerializeField] Image countDown;
+    [SerializeField] List<Sprite> countDownSprites;
 
     public GameObject resultObject;
     public GameObject gaugeObject;
@@ -42,9 +46,10 @@ public class GameSystem : MonoBehaviour
         {
             _round = round;
             prepareRestart = true;
+            //countDown
             return true;
         }
-        return false;       // 게임 진행
+        return false;               // 게임 진행
     }
 
     private void Update()
@@ -52,11 +57,25 @@ public class GameSystem : MonoBehaviour
         if (!prepareRestart) return;
 
         restartTime += Time.deltaTime;
+        if ((int)restartTime == 0)
+        {
+            countDown.transform.gameObject.SetActive(true);    // 카운트다운 이미지 활성화
+            countDown.sprite = countDownSprites[0];
+        }
+        else if ((int)restartTime == 1)
+        {
+            countDown.sprite = countDownSprites[1];
+        }
+        else if ((int)restartTime == 2)
+        {
+            countDown.sprite = countDownSprites[2];
+        }
         if (restartTime >= restartDelay)
         {
             prepareRestart = false;
             restartTime = 0f;
             gaugeObject.GetComponent<GaugeSystem>().Restart();
+            countDown.transform.gameObject.SetActive(false);    // 카운트다운 이미지 비활성화
         }
     }
 }
