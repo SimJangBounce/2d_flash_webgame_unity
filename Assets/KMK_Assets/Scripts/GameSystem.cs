@@ -13,11 +13,13 @@ public class GameSystem : MonoBehaviour
     int loseCount = 0;          // 패배 횟수
     bool isWin;
 
-    [SerializeField] float restartDelay = 3f;
+    [SerializeField] float restartDelay = 5f;
     float restartTime = 0f;
     bool prepareRestart = true;
     [SerializeField] Image countDown;
     [SerializeField] List<Sprite> countDownSprites;
+
+    [SerializeField] List<GameObject> RoundImages;
 
     public GameObject resultObject;
     public GameObject gaugeObject;
@@ -59,16 +61,25 @@ public class GameSystem : MonoBehaviour
         restartTime += Time.deltaTime;
         if ((int)restartTime == 0)
         {
-            countDown.transform.gameObject.SetActive(true);    // 카운트다운 이미지 활성화
-            countDown.sprite = countDownSprites[0];
+            RoundImages[round].SetActive(true);
         }
         else if ((int)restartTime == 1)
         {
-            countDown.sprite = countDownSprites[1];
+            RoundImages[round].SetActive(false);
+            countDown.transform.gameObject.SetActive(true);    // 카운트다운 이미지 활성화
+            countDown.sprite = countDownSprites[0];
         }
         else if ((int)restartTime == 2)
         {
+            countDown.sprite = countDownSprites[1];
+        }
+        else if ((int)restartTime == 3)
+        {
             countDown.sprite = countDownSprites[2];
+        }
+        else if ((int)restartTime == 4)
+        {
+            countDown.sprite = countDownSprites[3];
         }
         if (restartTime >= restartDelay)
         {
