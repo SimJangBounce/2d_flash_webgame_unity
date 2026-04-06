@@ -21,6 +21,8 @@ public class GameSystem : MonoBehaviour
 
     [SerializeField] List<GameObject> RoundImages;
 
+    [SerializeField] List<GameObject> RoundUiImages;
+
     public GameObject resultObject;
     public GameObject gaugeObject;
 
@@ -62,10 +64,16 @@ public class GameSystem : MonoBehaviour
         if ((int)restartTime == 0)
         {
             RoundImages[round].SetActive(true);
+            if (round > 0)
+            {
+                RoundUiImages[round - 1].SetActive(false);
+            }
         }
         else if ((int)restartTime == 1)
         {
             RoundImages[round].SetActive(false);
+            RoundUiImages[round].SetActive(true);
+
             countDown.transform.gameObject.SetActive(true);    // 카운트다운 이미지 활성화
             countDown.sprite = countDownSprites[0];
         }
