@@ -11,7 +11,6 @@ public class GameSystem : MonoBehaviour
 
     int winCount = 0;           // ½Â¸® È½¼ö
     int loseCount = 0;          // ÆÐ¹è È½¼ö
-    bool isWin;
 
     [SerializeField] float restartDelay = 5f;
     float restartTime = 0f;
@@ -30,19 +29,19 @@ public class GameSystem : MonoBehaviour
     {
         if (gaugeValue == 1f) {
             round++;
-            winCount++;
         }
         else if (gaugeValue == 0f) {
             round++;
-            loseCount++;
+            resultObject.SetActive(true);
+            resultObject.GetComponent<ResultShow>().ShowResult(false);
+
+            return true;
         }
 
         if (round > totalRound)     // °ÔÀÓ Á¾·á
         {
-            isWin = (winCount > loseCount) ? true : false;
-
             resultObject.SetActive(true);
-            resultObject.GetComponent<ResultShow>().ShowResult(isWin);
+            resultObject.GetComponent<ResultShow>().ShowResult(true);
 
             return true;
         }
