@@ -17,6 +17,8 @@ public class UiManager : MonoBehaviour
         UpdateSoundUI(toggle.isOn);
 
         toggle.onValueChanged.AddListener(OnToggleChanged);
+
+        SoundManager.Instance.PlayBGM();
     }
 
     void OnDestroy()

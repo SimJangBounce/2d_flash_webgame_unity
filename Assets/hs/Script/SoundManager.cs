@@ -6,6 +6,17 @@ public class SoundManager : MonoBehaviour
 
     public bool IsSoundOn { get; private set; } = true;
 
+    [Header("Audio Sources")]
+    public AudioSource bgmSource;
+    public AudioSource sfxSource;
+
+    [Header("Audio Clips")]
+    public AudioClip gameBgm;
+    public AudioClip clickSound;
+    public AudioClip roundStartSound;
+    public AudioClip winSound;
+    public AudioClip loseSound;
+
     void Awake()
     {
         if (Instance == null)
@@ -21,6 +32,25 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    //void Start()
+    //{
+    //    PlayBGM();
+    //}
+
+    void Update()
+    {
+        if (!IsSoundOn) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            PlayClick();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayClick();
+        }
+    }
 
     public void SetSound(bool isOn)
     {
@@ -34,5 +64,44 @@ public class SoundManager : MonoBehaviour
     void ApplySound()
     {
         AudioListener.volume = IsSoundOn ? 1f : 0f;
+    }
+
+    // ======================
+    // BGM
+    // ======================
+    public void PlayBGM()
+    {
+        if (gameBgm == null) return;
+
+        bgmSource.clip = gameBgm;
+        bgmSource.loop = true;
+        bgmSource.Play();
+    }
+
+    // ======================
+    // SFX
+    // ======================
+    public void PlayClick()
+    {
+        if (clickSound != null)
+            sfxSource.PlayOneShot(clickSound);
+    }
+
+    public void PlayRoundStart()
+    {
+        if (roundStartSound != null)
+            sfxSource.PlayOneShot(roundStartSound);
+    }
+
+    public void PlayWin()
+    {
+        if (winSound != null)
+            sfxSource.PlayOneShot(winSound);
+    }
+
+    public void PlayLose()
+    {
+        if (loseSound != null)
+            sfxSource.PlayOneShot(loseSound);
     }
 }

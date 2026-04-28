@@ -25,6 +25,8 @@ public class GameSystem : MonoBehaviour
     public GameObject resultObject;
     public GameObject gaugeObject;
 
+    bool playedRoundStartSound = false; // 라운드 사운드 한 번만 재생하기용
+
     public bool CheckOver(float gaugeValue, ref int _round)
     {
         if (gaugeValue == 1f) {
@@ -32,6 +34,9 @@ public class GameSystem : MonoBehaviour
         }
         else if (gaugeValue == 0f) {
             round++;
+            SoundManager.Instance.bgmSource.Stop();
+            SoundManager.Instance.PlayLose();
+
             resultObject.SetActive(true);
             resultObject.GetComponent<ResultShow>().ShowResult(false);
 
@@ -40,6 +45,9 @@ public class GameSystem : MonoBehaviour
 
         if (round > totalRound)     // 게임 종료
         {
+            SoundManager.Instance.bgmSource.Stop();
+            SoundManager.Instance.PlayWin();
+
             resultObject.SetActive(true);
             resultObject.GetComponent<ResultShow>().ShowResult(true);
 
@@ -49,6 +57,7 @@ public class GameSystem : MonoBehaviour
         {
             _round = round;
             prepareRestart = true;
+            playedRoundStartSound = false;
             //countDown
             return true;
         }
@@ -62,6 +71,12 @@ public class GameSystem : MonoBehaviour
         restartTime += Time.deltaTime;
         if ((int)restartTime == 0)
         {
+            if (!playedRoundStartSound)
+            {
+                SoundManager.Instance.PlayRoundStart();
+                playedRoundStartSound = true;
+            }
+
             RoundImages[round].SetActive(true);
             if (round > 0)
             {
