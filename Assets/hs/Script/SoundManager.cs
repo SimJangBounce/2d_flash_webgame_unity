@@ -75,6 +75,7 @@ public class SoundManager : MonoBehaviour
 
         bgmSource.clip = gameBgm;
         bgmSource.loop = true;
+        bgmSource.volume = 0.3f;
         bgmSource.Play();
     }
 
@@ -84,7 +85,7 @@ public class SoundManager : MonoBehaviour
     public void PlayClick()
     {
         if (clickSound != null)
-            sfxSource.PlayOneShot(clickSound);
+            sfxSource.PlayOneShot(clickSound, 0.2f);
     }
 
     public void PlayRoundStart()
